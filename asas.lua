@@ -627,7 +627,7 @@ end)
 Library:Notify({Title="Loaded";Text=string.format('Loaded In '..(tick()-oldTick));Duration=5})
 
 if queue_on_teleport ~= nil then
-    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/VertigoCool99/scripts/refs/heads/main/Dq.lua"))()')
+    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/rzcwy/scripts/refs/heads/main/asas.lua"))()
 end
 
 repeat task.wait() until Character:FindFirstChild("HumanoidRootPart") and Players.LocalPlayer.PlayerGui and Players.LocalPlayer.PlayerGui:FindFirstChild("HUD") and Players.LocalPlayer.PlayerGui.HUD:FindFirstChild("Main") and Players.LocalPlayer.PlayerGui.HUD.Main:FindFirstChild("PlayerStatus") and Players.LocalPlayer.PlayerGui and Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus:FindFirstChild("PlayerStatus") and Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus.PlayerStatus:FindFirstChild("PlayerName")
@@ -635,5 +635,6 @@ Functions:GetBestDungeon()
 AutoCreateDungeonNameDrop:SetValue(BestDungeon)
 AutoCreateDungeonDiffcultyDrop:SetValue(BestDifficulty)
 OldName,OldTitle = Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus.PlayerStatus.PlayerName.Text,Character.Head.playerNameplate.Title.Text
+
 
 getgenv().Loaded = true
