@@ -349,34 +349,16 @@ local AutoRetryToggle = SettingsGroup:AddToggle("AutoRetryToggle",{Text = "Auto 
 AutoRetryToggle:OnChanged(function(value)
     Settings.Misc.AutoRetry = value
 end)
-
 local RaidFarmToggle = SettingsGroup:AddToggle("RaidFarmToggle",{Text = "Raid Farm",Default = false,Risky = false})
 RaidFarmToggle:OnChanged(function(value)
     Settings.AutoFarm.RaidFarm = value
 end)
-
--- Fixed Auto Retry (votes immediately + every 3s until UI closes)
 Players.LocalPlayer.PlayerGui:WaitForChild("RetryVote").Changed:Connect(function(change)
     if change == "Enabled" and Settings.Misc.AutoRetry == true then
-        -- Initial vote
-        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer({
-            [1] = {["\3"] = "vote", ["vote"] = true},
-            [2] = RemoteCodes["DungeonRetryBridge"]
-        })
-        
-        -- Looped votes (non-blocking)
-        spawn(function()
-            while Players.LocalPlayer.PlayerGui:FindFirstChild("RetryVote") and Players.LocalPlayer.PlayerGui.RetryVote.Enabled do
-                task.wait(3)
-                game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer({
-                    [1] = {["\3"] = "vote", ["vote"] = true},
-                    [2] = RemoteCodes["DungeonRetryBridge"]
-                })
-            end
-        end)
+        game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer({[1] = {["\3"] = "vote",["vote"] = true},[2] = RemoteCodes["DungeonRetryBridge"]})   
+        repeat task.wait(3) game:GetService("ReplicatedStorage").dataRemoteEvent:FireServer({[1] = {["\3"] = "vote",["vote"] = true},[2] = RemoteCodes["DungeonRetryBridge"]})   until uhmm == false
     end
 end)
-
 local GetGreggCoinToggle = SettingsGroup:AddToggle("GetGreggCoin",{Text = "Get Gregg Coin",Default = false,Risky = false})
 GetGreggCoinToggle:OnChanged(function(value)
     Settings.Misc.GetGreggCoin = value
@@ -627,7 +609,7 @@ end)
 Library:Notify({Title="Loaded";Text=string.format('Loaded In '..(tick()-oldTick));Duration=5})
 
 if queue_on_teleport ~= nil then
-    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/rzcwy/scripts/refs/heads/main/asas.lua"))()
+    queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/VertigoCool99/scripts/refs/heads/main/Dq.lua"))()')
 end
 
 repeat task.wait() until Character:FindFirstChild("HumanoidRootPart") and Players.LocalPlayer.PlayerGui and Players.LocalPlayer.PlayerGui:FindFirstChild("HUD") and Players.LocalPlayer.PlayerGui.HUD:FindFirstChild("Main") and Players.LocalPlayer.PlayerGui.HUD.Main:FindFirstChild("PlayerStatus") and Players.LocalPlayer.PlayerGui and Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus:FindFirstChild("PlayerStatus") and Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus.PlayerStatus:FindFirstChild("PlayerName")
@@ -635,6 +617,5 @@ Functions:GetBestDungeon()
 AutoCreateDungeonNameDrop:SetValue(BestDungeon)
 AutoCreateDungeonDiffcultyDrop:SetValue(BestDifficulty)
 OldName,OldTitle = Players.LocalPlayer.PlayerGui.HUD.Main.PlayerStatus.PlayerStatus.PlayerName.Text,Character.Head.playerNameplate.Title.Text
-
 
 getgenv().Loaded = true
